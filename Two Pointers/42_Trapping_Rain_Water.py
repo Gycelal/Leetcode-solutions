@@ -1,6 +1,6 @@
 
 """ Not the most efficient solution, but it works. We can optimize it by using two pointers and calculating the max
-  left and max right on the fly instead of storing them in separate lists. """
+  left and max right on the fly instead of storing them in separate lists. o(n) time and o(n) space complexity. """
 class Solution(object):
     def trap(self, height):
         """
@@ -42,6 +42,27 @@ class Solution(object):
         return water
     
 
-# Two Pointer Solution
+# Two Pointer Solution which has o(n) time and o(1) space complexity. We can calculate the max left and max right on the fly using two pointers.
 
+class Solution(object):
+    def trap(self, height):
+        """
+        :type height: List[int]
+        :rtype: int
+        """
+        left, right = 0, len(height) - 1
+        leftMax, rightMax = height[left], height[right]
+        water = 0
+        while left < right:
+            if leftMax < rightMax:
+                left += 1
+                leftMax = max(leftMax, height[left])
+                traped_water = leftMax - height[left]
+                water += traped_water if traped_water > 0 else 0
+            else:
+                right -= 1
+                rightMax = max(rightMax, height[right])
+                traped_water = rightMax - height[right]
+                water += traped_water if traped_water > 0 else 0
+        return water
 
